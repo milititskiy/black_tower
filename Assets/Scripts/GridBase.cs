@@ -15,7 +15,6 @@ namespace TD.RPG
         //public float scaleY = 2.3f;
         public float scaleY = 1.1f;
 
-
         public bool debugTile = true;
         public Material debugMaterial;
 
@@ -61,12 +60,12 @@ namespace TD.RPG
 
             if (scaleXZ == 0)
             {
-                Debug.Log("Scale xz is 0 , asiigning 1");
+                Debug.Log("Scale xz is 0 , assigning 1");
                 scaleXZ = 1;
             }
             if (scaleY == 0)
             {
-                Debug.Log("Scale Y is 0 , asiigning 2");
+                Debug.Log("Scale Y is 0 , assigning 2");
                 scaleY = 2;
             }
         }
@@ -78,9 +77,10 @@ namespace TD.RPG
             {
                 YLevels ylvl = new YLevels();
                 ylvl.tileParent = new GameObject();
-                ylvl.tileParent.name = "level " + y.ToString();
+                ylvl.tileParent.name = "level_name " + y.ToString();
                 ylvl.y = y;
                 //ylvl.tileParent.transform.position.y = 1f;
+                //ylvl.tileParent.layer = LayerMask.NameToLayer("Ground");
                 yLevels.Add(ylvl);
 
                 //CreateCollision(y);
@@ -174,7 +174,7 @@ namespace TD.RPG
 
             //cube.transform.parent = go.transform;
             //cube.transform.localPosition = Vector3.up;
-
+            //cube.layer = LayerMask.NameToLayer("Ground");
             cube.transform.localEulerAngles = new Vector3(90, 0, 0);
             cube.name = "Tiles " + z.ToString();
             cube.tag = "Tiles";

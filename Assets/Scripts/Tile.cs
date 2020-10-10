@@ -19,6 +19,8 @@ public class Tile : MonoBehaviour
 
     public List<Tile> adjacencyList = new List<Tile>();
 
+
+    
     public GameObject worldObject;
 
     //For BFS (breadth first search)
