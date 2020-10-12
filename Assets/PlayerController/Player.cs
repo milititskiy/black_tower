@@ -52,9 +52,9 @@ public class Player : MonoBehaviour
         }
         else
         {
-            dashTime -= Time.deltaTime;
+            dashTime -= Time.deltaTime * 10;
             var direction = OnDirection(mvm);
-            transform.position += direction * distance;
+            transform.position += direction * distance * dashTime;
             
         }
     }
@@ -89,18 +89,22 @@ public class Player : MonoBehaviour
         
         if (direction.y == 1)
         {
+            this.gameObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             return Vector3.right;
         }
         else if (direction.y == -1)
         {
+            this.gameObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             return  Vector3.left;
         }
         else if (direction.x == 1)
         {
-           return Vector3.back;
+            this.gameObject.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+            return Vector3.back;
         }
         else if (direction.x == -1)
         {
+            this.gameObject.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
             return Vector3.forward;
         }
         return Vector3.zero;
@@ -109,7 +113,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        OnMove(_controls.Player.Movement.ReadValue<Vector2>());
+        //OnMove(_controls.Player.Movement.ReadValue<Vector2>());
         //OnDash(_controls.Player.Dash.ReadValue<Vector2>());
 
         if (rb.velocity.y < 0)
@@ -118,26 +122,35 @@ public class Player : MonoBehaviour
         }
         //else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
         //{
-        //    rb.velocity += (Vector3.up ) * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        //    rb.velocity += (Vector3.up) * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         //}
     }
 
- 
+   
+
+
 
     private void OnJump(InputAction.CallbackContext context)
     {
         var mvm = _controls.Player.Movement.ReadValue<Vector2>();
+        var jump = _controls.Player.Jump.ReadValue<float>();
         var direction = OnDirection(mvm);
         
+
         if (IsGrounded())
         {
-            GetComponent<Rigidbody>().AddForce((Vector3.up) * 12 + (direction) * jumpVelocity, ForceMode.VelocityChange);
-            //rb.velocity += (Vector3.up * upMultiplier) * (Physics.gravity.y) * Time.deltaTime;
-           
+
+            //GetComponent<Rigidbody>().AddForce((Vector3.up) * 12 + (direction) * jumpVelocity, ForceMode.VelocityChange);
+            rb.AddForce((Vector3.up) * 12 + (direction) * jumpVelocity, ForceMode.VelocityChange);
+
+            
+
         }
+       
         else if (!IsGrounded()){
-            Debug.Log(IsGrounded());
-            rb.velocity -= (Vector3.down) * (Physics.gravity.y * physicMultiplier)  * Time.deltaTime;
+
+            //rb.velocity -= (Vector3.down) + direction * (Physics.gravity.y * physicMultiplier)  * Time.deltaTime;
+           
         }
     }    
         
